@@ -1,3 +1,15 @@
-echo venv> .gitignore
-echo __pycache__>> .gitignore
-echo *.db>> .gitignore
+# Python
+venv/
+__pycache__/
+*.pyc
+.env
+
+# Frontend
+node_modules/
+dist/
+
+# Database
+transport.db
+
+# OS
+.DS_Store
