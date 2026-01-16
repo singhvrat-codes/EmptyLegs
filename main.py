@@ -1,3 +1,45 @@
+import sqlite3
+
+def init_db():
+    conn = sqlite3.connect("transport.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS drivers (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT,
+        origin_lat REAL,
+        origin_lng REAL,
+        dest_lat REAL,
+        dest_lng REAL
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS shipments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        origin_lat REAL,
+        origin_lng REAL,
+        dest_lat REAL,
+        dest_lng REAL,
+        weight REAL
+    )
+    """)
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS matches (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        driver_id INTEGER,
+        shipment_id INTEGER,
+        score REAL,
+        accepted INTEGER DEFAULT 0
+    )
+    """)
+
+    conn.commit()
+    conn.close()
+
+init_db()
 import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
